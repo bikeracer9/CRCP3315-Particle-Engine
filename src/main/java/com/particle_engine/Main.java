@@ -10,42 +10,44 @@ package com.particle_engine;
 import processing.core.PApplet;
 
 public class Main extends PApplet {
-    public static void main(String[] args) {
+
+    Balls balls; //draws the simulation to the screen
+    public static void main(String[] args) { //sets up processing
         PApplet.main("com.particle_engine.Main");
     }
 
+    //sets up the size of the window
     public void settings()
     {
         size(800, 800);
+        balls = new Balls(this);
     }
-
-//--------------------------------
     
     /*
      * This is the setup function
+     * Changes the background color to black.
      */
     public void setup()
-    {
-       background(0);
+    {               
+        balls.setup(); //calls the balls from the class into the main function
     } 
 
     /*
     * This is the main draw function.
+    * Draws everything on the screen.
     */
     public void draw()
     {
-        
+        balls.draw();
     }
     
 
     /*
      * This is the mouseClicked method. 
-     * 
-     * X.
      */
-    public void mouseClicked()
+    public void mousePressed()
     {
-        
+        balls.mousePressed();
     }
 
    

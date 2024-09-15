@@ -66,8 +66,67 @@ public class Ball {
 
     }
 
+    /*
+     * This is the getter function for the yVel float.
+     * This gets the yVel in the Balls class.
+     */
+    public float get_Y_Vel()
+    {
+        return this.yVel;
+    }
+    
+    /*
+    * This is the setter function for the yVel float.
+    * this is called in the Balls function to reset yVel when it gets too fast or too slow. 
+    */
+    public void set_Y_Vel(float newYVel)
+    {
+        this.yVel = newYVel;
+    }
+
     void faster() //called in the main, mouseclicked function
     {             // - clicking the mouse makes the ball move faster.
-        yVel++;
+        yVel = (float) (yVel + 0.25);
+
+        // if(yVel >= 10)
+        // {
+        //     yVel = 1;
+        //     System.out.println(yVel);
+        // }
     }
+
+    void slower() //called in the main, mouseclicked function
+    {             // - clicking the mouse makes the ball move faster.
+        yVel = (float) (yVel - 0.25);
+    }
+
+    // void checkVel()
+    // {
+        
+    // }
+
+    //this function is called in the Balls class, and it changes the direction of the balls when the mouse is pressed.  
+    void reverseDir()
+    {
+        y_direction *= -1;
+        x_direction *= -1;
+    }
+
+    
+
+    // void collide()
+    // {
+    //     if()
+    // }
+    
+    // public float get_X_Direction()
+    // {
+    //     return x_direction;
+    // }
+
+    // public void set_X_Direction(float newXDir)
+    // {
+    //     this.x_direction = newXDir;
+    // }
+
 }

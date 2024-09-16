@@ -105,28 +105,94 @@ public class Ball {
         
     // }
 
+    /*
+     * This is the getter function to get the X_Direction of an object.
+     * Called in the Balls class in the Collide function.
+     */
+    public float get_X_Direction()
+    {
+        return x_direction;
+    }
+
+    /*
+     * This is the setter function to get the X_Direction of an object.
+     * Called in the Balls class in the Collide function.
+     */
+    public void set_X_Direction(float newXDir)
+    {
+        this.x_direction = newXDir;
+    }
+
     //this function is called in the Balls class, and it changes the direction of the balls when the mouse is pressed.  
     void reverseDir()
     {
+        // xVel *= -1;
+        // yVel *= -1;
+
         y_direction *= -1;
         x_direction *= -1;
     }
 
     
+    //collide function! (DOES NOT WORK ATM) ///////------------------------------------
+    void collide(Ball b2)
+    {
+        //float spring = (float) 0.01;
+        float dx = b2.x - this.x;
+        float dy = b2.y - this.y;
+        float distance = PApplet.sqrt(dx*dx + dy*dy);
+        float minDist = b2.radius + this.radius;
+        if(distance < minDist)
+        {
+            
+            // this.y += this.yVel * this.y_direction * -1; 
+            // this.x += this.xVel * this.x_direction* -1;
 
+            // b2.y += b2.yVel * b2.y_direction * -1; 
+            // b2.x += b2.xVel * b2.x_direction* -1;
+            
+            // this.xVel *= -1;
+            // b2.xVel *= -1;
+
+            // this.yVel *= -1;
+            // b2.yVel *= -1;
+            
+            // float angle = PApplet.atan2(dy, dx);
+            
+            // float targetX = x + PApplet.cos(angle) * minDist;
+            // float targetY = y + PApplet.sin(angle) * minDist;
+            
+            // float ax = (targetX - b2.x); //* spring;
+            // float ay = (targetY - b2.y); // * spring;
+            
+            // xVel -= ax;
+            // yVel -= ay;
+            
+            // b2.xVel += ax;
+            // b2.yVel += ay;
+        }
+
+    }
+    
+    // //collide function when two balls touch each other.
     // void collide()
     // {
-    //     if()
+    //     for(int i = 0; i < balls.size(); i++)
+    //     {
+    //         float dx = balls.get(i-1).x - balls.get(i).x;
+    //         float dy = balls.get(i-1).y - balls.get(i).y;
+
+    //         float distance = (float) sqrt(dx*dx + dy*dy);
+    //         float minDist = balls.get(i-1).radius + balls.get(i).radius;
+    //         if(minDist < distance)
+    //         {
+    //             float xdir_ = balls.get(i).get_X_Direction();
+    //             xdir_ = xdir_ * -1;
+    //             System.out.println("h");
+    //             balls.get(i).set_X_Direction(xdir_);
+    //         }
+    //     }
     // }
     
-    // public float get_X_Direction()
-    // {
-    //     return x_direction;
-    // }
-
-    // public void set_X_Direction(float newXDir)
-    // {
-    //     this.x_direction = newXDir;
-    // }
 
 }

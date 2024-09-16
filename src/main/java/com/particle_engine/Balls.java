@@ -5,7 +5,6 @@
  */
 package com.particle_engine;
 
-
 import java.util.ArrayList;
 
 import processing.core.PApplet;
@@ -62,7 +61,7 @@ public class Balls {
                 {
                     balls.get(i).faster();//makes the balls go faster. called in Ball class.
                     
-                    if(balls.get(i).get_Y_Vel() >= 15) //calls the get function to see what the value of yVel is.
+                    if(balls.get(i).get_Y_Vel() >= 15) //calls the get function to see what the value of yVel is and checks to see if it is greater than 15
                     {
                         balls.get(i).set_Y_Vel(1); //sets the value of yVel back to 1.
                     }
@@ -77,42 +76,65 @@ public class Balls {
                 {
                     balls.get(i).slower(); //makes the balls slow down. called in Ball class.
 
-                    if(balls.get(i).get_Y_Vel() <= 0)//calls the get function to see what the value of yVel is.
+                    if(balls.get(i).get_Y_Vel() <= 0)//calls the get function to see what the value of yVel is and sees if it is less than zero
                     {
                         balls.get(i).set_Y_Vel(1);//sets the value of yVel back to 1.
                     }
                 }
             }
         }
+
+        
+
         main.background(0); //clears the background from the last frame.
+        
+        //---------------------------------------------------------------- (collide function)
         for(int i = 0; i < balls.size(); i++)//loops through the balls in the ArrayList
         {
+            Ball b1 = balls.get(i);
             balls.get(i).draw(); //draws each ball in the list. 
+            for(int j = 0; j < balls.size(); j++)//loops through the balls in the ArrayList
+            {
+                Ball b2 = balls.get(j);
+                b2.collide(b1);
+            }
         }
+
+        checkMouseXY();
+
+        
     }
 
     //mouse interaction below!
+    // pmouseX - mouseX (velocity) then pVelocity - new V (=acceleration) (clicking);
     void mousePressed()
     {//if the mouse is pressed, do items below...
         
         for(int i = 0; i < balls.size(); i++) //loops through the balls in the ArrayList.
         {
             balls.get(i).reverseDir(); //calls the reverseDir function in Ball, changes the X & Y direction of the balls.
-            
         }
     }
 
-    //collide function when two balls touch each other.
-    // void collide()
-    // {
-    //     for(int i =0; i < balls.size(); i++)
-    //     {
-    //         float dx = balls.get(i).x - balls.get(i-1).x;
-    //         float dy = balls.get(i).y - balls.get(i-1).y;
+    void checkMouseXY()
+    {
+        for(int i = 0; i < balls.size(); i++)
+        {
+            if(main.mouseX >= 700 && main.mouseY <= 100)
+            {
+                    balls.get(i).xVel = 0;
+                    balls.get(i).yVel = 0;
+            }
+            
+            else
+            {
+                balls.get(i).set_Y_Vel(1);
+                //balls.get(i).yVel = 1;
+            }
+        }
+    }
 
-    //         float distance = sqrt()
-    //     }
-    // }
+    
     
     // void collide()
     // {

@@ -3,6 +3,7 @@
  * "Particle Engine" Assignment
  * September 10th, 2024
  * This project uses OOP to create a particle engine with at least 500 particles. 
+ * This is the Main Balls file.
  */
 
 package com.particle_engine;
@@ -41,15 +42,22 @@ public class Main extends PApplet {
     {
         balls.draw();
     }
-    
 
     /*
-     * This is the mouseClicked method. 
+     * This is the mousePressed method. 
+     * When the mouse is pressed, the objects move in the opposite direction.
      */
     public void mousePressed()
     {
         balls.mousePressed();
     }
 
-   
+    /*
+     * This is the mouseDragged method. 
+     * When the mouse is dragged, the opacity of the objects all change. 
+     */
+    public void mouseDragged()
+    {
+            balls.mouseDragged();
+    }
 }

@@ -15,15 +15,12 @@ public class Balls {
 
     Ball ball;
 
-    //ArrayList<Ball> others; //  OTHER class of balls (used for collide function)
-
     int ballCount = 500; //the total amount of balls being drawn.
     int maxRadius = 65; //max size the ball can be.
-    int minRadius = 25;
-    
-    // float rR = main.random(255);
-    // float rG = main.random(255);
-    // float rB = main.random(255);
+    int minRadius = 25; //min size the ball can be.
+
+    int alphaValue = 255;
+
 
     Balls(PApplet main_)
     {
@@ -43,7 +40,7 @@ public class Balls {
     {
         for(int i = 0; i < ballCount; i++)
         {
-            Ball ball = new Ball(main.random(main.width), main.random(main.height), main.random(minRadius, maxRadius), main, main.color(main.random(255),main.random(255),main.random(255)));
+            Ball ball = new Ball(main.random(main.width), main.random(main.height), main.random(minRadius, maxRadius), main, main.color(main.random(255), main.random(255), main.random(255)), alphaValue);
             balls.add(ball);
         }
     }
@@ -52,61 +49,39 @@ public class Balls {
     void draw()
     {
         main.noStroke();
-        
+
         if (main.keyPressed)
         {
-            if( main.key == 'q' || main.key == 'Q') //if Q is pressed, then do below...
+            if( main.key == 'e' || main.key == 'E') //if E is pressed, then do below...
             {
-                for(int i = 0; i < balls.size(); i++)//loops through all the balls in the ArrayList.
+                for(int i = 0; i < balls.size(); i++)
                 {
-                    balls.get(i).faster();//makes the balls go faster. called in Ball class.
-                    
-                    if(balls.get(i).get_Y_Vel() >= 15) //calls the get function to see what the value of yVel is and checks to see if it is greater than 15
-                    {
-                        balls.get(i).set_Y_Vel(1); //sets the value of yVel back to 1.
-                    }
-                    
+                    balls.get(i).changeColor(); //changes the color of all the objects.
                 }
-                    
             }
 
-            if(main.key == 'w' || main.key == 'W'  ) //if W is pressed, then do below...
+            if( main.key == 'r' || main.key == 'R') //if R is pressed, then do below...
             {
-                for(int i =0; i < balls.size(); i++) //loops through all the balls in the ArrayList.
+                for(int i = 0; i < balls.size(); i++)
                 {
-                    balls.get(i).slower(); //makes the balls slow down. called in Ball class.
-
-                    if(balls.get(i).get_Y_Vel() <= 0)//calls the get function to see what the value of yVel is and sees if it is less than zero
-                    {
-                        balls.get(i).set_Y_Vel(1);//sets the value of yVel back to 1.
-                    }
+                    balls.get(i).alphaValue = 255; //resets the opacity of the objects.
                 }
             }
         }
-
-        
 
         main.background(0); //clears the background from the last frame.
         
-        //---------------------------------------------------------------- (collide function)
         for(int i = 0; i < balls.size(); i++)//loops through the balls in the ArrayList
         {
-            Ball b1 = balls.get(i);
-            balls.get(i).draw(); //draws each ball in the list. 
-            for(int j = 0; j < balls.size(); j++)//loops through the balls in the ArrayList
-            {
-                Ball b2 = balls.get(j);
-                b2.collide(b1);
-            }
+            balls.get(i).draw(); //draws each ball in the list
         }
-
-        checkMouseXY();
-
-        
-    }
+        checkMouseXY(); //checks to see if the mouse is in the top right corner or not.
+    } 
 
     //mouse interaction below!
-    // pmouseX - mouseX (velocity) then pVelocity - new V (=acceleration) (clicking);
+
+    
+    //This is the mousePressed function...
     void mousePressed()
     {//if the mouse is pressed, do items below...
         
@@ -116,6 +91,11 @@ public class Balls {
         }
     }
 
+    /*
+     * This function is the checkMouseXY function.
+     * It checks to see if the mouseX & mouseY is in a specific spot on the window (the top right corner)
+     * If this is true, then it sets the velocity to be 0, otherwise it is always set to 1.
+     */
     void checkMouseXY()
     {
         for(int i = 0; i < balls.size(); i++)
@@ -129,30 +109,25 @@ public class Balls {
             else
             {
                 balls.get(i).set_Y_Vel(1);
-                //balls.get(i).yVel = 1;
+                balls.get(i).set_X_Vel(1);
             }
         }
     }
 
-    
-    
-    // void collide()
-    // {
-    //     for(int i = 0; i < ballCount; i++)
-    //     {
-    //         float dx = others.get(i).x - balls.get(i).x;
-    //         float dy = others.get(i).y - balls.get(i).y;
-            
-    //         float distance = (float) sqrt(dx*dx + dy*dy);
-    //         float minDist = others.get(i).radius + balls.get(i).radius;
-    //         if(distance < minDist)
-    //         {
-    //             float xdir_ = balls.get(i).get_X_Direction();
-    //             xdir_ = xdir_ * -1;
-    //             System.out.println("h");
-    //             balls.get(i).set_X_Direction(xdir_);
-    //         }
-            
-    //     }
-    // }
+    /*
+     * This is the mouseDragged function.
+     * If the mouse is clicked & dragged, then it changes the opacity of the objects and adds 1 to it.
+     */
+    void mouseDragged()
+    {
+        for(int i = 0; i < balls.size(); i++)
+        {
+            balls.get(i).alphaValue = balls.get(i).alphaValue + 1;
+            if(balls.get(i).alphaValue >= 255)
+            {
+                balls.get(i).alphaValue = 0;
+            }
+        }
+    }
+
 }

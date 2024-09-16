@@ -21,24 +21,29 @@ public class Ball {
     float radius; //radius (how big the ball is)
     int ballColor; //color of the ball
 
-    Ball(float x_, float y_, float radius_, PApplet main_, int c)
+    int alphaValue; //value that changes the balls opacity. 
+
+    //ball constructor.
+    Ball(float x_, float y_, float radius_, PApplet main_, int c, int a)
     {
         x = x_;
         y = y_;
         radius = radius_;
         ballColor = c;
+        alphaValue = a;
 
         main = main_;
-        
     }
 
+    //draw function for the balls.
     void draw()
     {
-        main.fill(ballColor); //colors the ball
+        main.fill(ballColor, alphaValue); //colors the ball with color and set opacity.
         main.ellipse(x,y,radius,radius); //draws an ellipse
         move(); //calls the move function
     }
 
+    //this is the move function, it is what makes the ball move around the screen.
     void move()
     {
         y += yVel * y_direction; // equation to make the ball move in the Y axis and in the correct direction.
@@ -66,64 +71,43 @@ public class Ball {
 
     }
 
-    /*
-     * This is the getter function for the yVel float.
-     * This gets the yVel in the Balls class.
-     */
-    public float get_Y_Vel()
-    {
-        return this.yVel;
-    }
     
     /*
     * This is the setter function for the yVel float.
-    * this is called in the Balls function to reset yVel when it gets too fast or too slow. 
+    * This is called in the Balls function to set it 
+    * to 0 (when the mouse is in the top right corner) 
+    * or 1 (when the mouse is NOT in the top right corner).
     */
     public void set_Y_Vel(float newYVel)
     {
         this.yVel = newYVel;
     }
 
-    void faster() //called in the main, mouseclicked function
-    {             // - clicking the mouse makes the ball move faster.
-        yVel = (float) (yVel + 0.25);
-
-        // if(yVel >= 10)
-        // {
-        //     yVel = 1;
-        //     System.out.println(yVel);
-        // }
-    }
-
-    void slower() //called in the main, mouseclicked function
-    {             // - clicking the mouse makes the ball move faster.
-        yVel = (float) (yVel - 0.25);
-    }
-
-    // void checkVel()
-    // {
-        
-    // }
-
     /*
-     * This is the getter function to get the X_Direction of an object.
-     * Called in the Balls class in the Collide function.
-     */
-    public float get_X_Direction()
+    * This is the setter function for the xVel float.
+    * This is called in the Balls function to set it 
+    * to 0 (when the mouse is in the top right corner) 
+    * or 1 (when the mouse is NOT in the top right corner).
+    */
+    public void set_X_Vel(float newXVel)
     {
-        return x_direction;
+        this.xVel = newXVel;
     }
 
     /*
-     * This is the setter function to get the X_Direction of an object.
-     * Called in the Balls class in the Collide function.
+     * This is the changeColor function.
+     * This function randomly changes the color of the balls when called by pressing the 'E' key.
      */
-    public void set_X_Direction(float newXDir)
+    void changeColor()
     {
-        this.x_direction = newXDir;
+        ballColor = main.color(main.random(255),main.random(255),main.random(255));
     }
 
-    //this function is called in the Balls class, and it changes the direction of the balls when the mouse is pressed.  
+    /*
+    * This function is the reverseDirection method,
+    * It is called in the Balls class in mousePressed(), 
+    * and it changes the direction of the balls when the mouse is pressed.  
+    */
     void reverseDir()
     {
         // xVel *= -1;
@@ -132,67 +116,5 @@ public class Ball {
         y_direction *= -1;
         x_direction *= -1;
     }
-
-    
-    //collide function! (DOES NOT WORK ATM) ///////------------------------------------
-    void collide(Ball b2)
-    {
-        //float spring = (float) 0.01;
-        float dx = b2.x - this.x;
-        float dy = b2.y - this.y;
-        float distance = PApplet.sqrt(dx*dx + dy*dy);
-        float minDist = b2.radius + this.radius;
-        if(distance < minDist)
-        {
-            
-            // this.y += this.yVel * this.y_direction * -1; 
-            // this.x += this.xVel * this.x_direction* -1;
-
-            // b2.y += b2.yVel * b2.y_direction * -1; 
-            // b2.x += b2.xVel * b2.x_direction* -1;
-            
-            // this.xVel *= -1;
-            // b2.xVel *= -1;
-
-            // this.yVel *= -1;
-            // b2.yVel *= -1;
-            
-            // float angle = PApplet.atan2(dy, dx);
-            
-            // float targetX = x + PApplet.cos(angle) * minDist;
-            // float targetY = y + PApplet.sin(angle) * minDist;
-            
-            // float ax = (targetX - b2.x); //* spring;
-            // float ay = (targetY - b2.y); // * spring;
-            
-            // xVel -= ax;
-            // yVel -= ay;
-            
-            // b2.xVel += ax;
-            // b2.yVel += ay;
-        }
-
-    }
-    
-    // //collide function when two balls touch each other.
-    // void collide()
-    // {
-    //     for(int i = 0; i < balls.size(); i++)
-    //     {
-    //         float dx = balls.get(i-1).x - balls.get(i).x;
-    //         float dy = balls.get(i-1).y - balls.get(i).y;
-
-    //         float distance = (float) sqrt(dx*dx + dy*dy);
-    //         float minDist = balls.get(i-1).radius + balls.get(i).radius;
-    //         if(minDist < distance)
-    //         {
-    //             float xdir_ = balls.get(i).get_X_Direction();
-    //             xdir_ = xdir_ * -1;
-    //             System.out.println("h");
-    //             balls.get(i).set_X_Direction(xdir_);
-    //         }
-    //     }
-    // }
-    
 
 }
